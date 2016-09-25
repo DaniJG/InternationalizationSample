@@ -1,0 +1,9 @@
+﻿@model System.Net.HttpStatusCode
+@{
+    ViewData["Title"] = "Error " + (int)Model;
+}
+
+<div class="jumbotron">
+    <h1>Error @((int)Model)!</h1>
+    <p><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></p>
+</div>
