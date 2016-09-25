@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace InternationalizationSample.Controllers
 {
-    public class HelloWorldController: BaseApiController
+    [Route("hello-world")]
+    public class HelloWorldApiController
     {
-        private readonly IStringLocalizer<HelloWorldController> localizer;
+        private readonly IStringLocalizer<HelloWorldApiController> localizer;
 
-        public HelloWorldController(IStringLocalizer<HelloWorldController> localizer)
+        public HelloWorldApiController(IStringLocalizer<HelloWorldApiController> localizer)
         {
             this.localizer = localizer;
         }

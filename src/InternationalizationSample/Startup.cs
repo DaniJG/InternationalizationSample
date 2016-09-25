@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using System.Globalization;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing.Constraints;
+using InternationalizationSample.Conventions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace InternationalizationSample
 {
@@ -34,7 +36,7 @@ namespace InternationalizationSample
             // Add framework services.
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
+            services.AddMvc(opts => opts.Conventions.Insert(0, new ApiPrefixConvention()))
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
         }
