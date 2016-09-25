@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Routing.Constraints;
 using InternationalizationSample.Conventions;
 using Microsoft.AspNetCore.Mvc;
+using InternationalizationSample.CultureProviders;
 
 namespace InternationalizationSample
 {
@@ -51,14 +52,16 @@ namespace InternationalizationSample
                 new CultureInfo("es"),
                 new CultureInfo("es-ES")
             };
-            app.UseRequestLocalization(new RequestLocalizationOptions
+            var localizationOptions = new RequestLocalizationOptions
             {
                 DefaultRequestCulture = new RequestCulture("en-US"),
                 // Used for formatting numbers, dates, etc.
                 SupportedCultures = supportedCultures,
                 // Used for finding localized strings
                 SupportedUICultures = supportedCultures
-            });
+            };
+            localizationOptions.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
+            app.UseRequestLocalization(localizationOptions);
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
