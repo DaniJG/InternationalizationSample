@@ -25,13 +25,13 @@ namespace InternationalizationSample.Conventions
             apiPrefix = new AttributeRouteModel(
                 new RouteAttribute("api/"));
             apiCulturePrefix = new AttributeRouteModel(
-                new RouteAttribute("api/{language:regex(^[[a-z]]{{2}}(?:-[[A-Z]]{{2}})?$)}/"));
+                new RouteAttribute("api/{culture:regex(^[[a-z]]{{2}}(?:-[[A-Z]]{{2}})?$)}/"));
 
             //These are meant to be added as routes for api controllers that do not specify any route attribute
             apiRouteWithController = new AttributeRouteModel(
                 new RouteAttribute("api/[controller]"));
             apiCultureRouteWithController = new AttributeRouteModel(
-                new RouteAttribute("api/{language:regex(^[[a-z]]{{2}}(?:-[[A-Z]]{{2}})?$)}/[controller]"));
+                new RouteAttribute("api/{culture:regex(^[[a-z]]{{2}}(?:-[[A-Z]]{{2}})?$)}/[controller]"));
         }
 
         public void Apply(ApplicationModel application)

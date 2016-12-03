@@ -37,7 +37,12 @@ namespace InternationalizationSample
             // Add framework services.
             services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc(opts => opts.Conventions.Insert(0, new ApiPrefixConvention()))
+            services
+                .AddMvc(opts =>
+                {
+                    opts.Conventions.Insert(0, new ApiPrefixConvention());
+                    opts.Filters.Add(new MiddlewareFilterAttribute(typeof(LocalizationFilterPipeline)));
+                })
                 .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
                 .AddDataAnnotationsLocalization();
         }
@@ -45,24 +50,6 @@ namespace InternationalizationSample
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            var supportedCultures = new[]
-            {
-                new CultureInfo("en"),
-                new CultureInfo("en-US"),
-                new CultureInfo("es"),
-                new CultureInfo("es-ES")
-            };
-            var localizationOptions = new RequestLocalizationOptions
-            {
-                DefaultRequestCulture = new RequestCulture("en-US"),
-                // Used for formatting numbers, dates, etc.
-                SupportedCultures = supportedCultures,
-                // Used for finding localized strings
-                SupportedUICultures = supportedCultures
-            };
-            localizationOptions.RequestCultureProviders.Insert(0, new UrlRequestCultureProvider());
-            app.UseRequestLocalization(localizationOptions);
-
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

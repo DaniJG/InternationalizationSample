@@ -8,28 +8,30 @@ using System.Threading.Tasks;
 
 namespace InternationalizationSample.CultureProviders
 {
-    public class UrlRequestCultureProvider: IRequestCultureProvider
-    {
-        public Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
-        {
-            var url = httpContext.Request.Path;
+    // This class is not needed anymore in 1.1, as localization is added as filter and it uses the built in RouteDataRequestCultureProvider
 
-            //Quick and dirty parsing of language from url path, which looks like "/api/es-ES/hello-world"
-            var parts = httpContext.Request.Path.Value.Split('/').Where(p => !String.IsNullOrWhiteSpace(p)).ToList();
-            if (parts.Count == 0)
-            {
-                return Task.FromResult<ProviderCultureResult>(null);
-            }
+    //public class UrlRequestCultureProvider: IRequestCultureProvider
+    //{
+    //    public Task<ProviderCultureResult> DetermineProviderCultureResult(HttpContext httpContext)
+    //    {
+    //        var url = httpContext.Request.Path;
 
-            var cultureSegmentIndex = parts.Contains("api") ? 1 : 0;
-            var hasCulture = Regex.IsMatch(parts[cultureSegmentIndex], @"^[a-z]{2}(?:-[A-Z]{2})?$");
-            if (!hasCulture)
-            {
-                return Task.FromResult<ProviderCultureResult>(null);
-            }
+    //        //Quick and dirty parsing of language from url path, which looks like "/api/es-ES/hello-world"
+    //        var parts = httpContext.Request.Path.Value.Split('/').Where(p => !String.IsNullOrWhiteSpace(p)).ToList();
+    //        if (parts.Count == 0)
+    //        {
+    //            return Task.FromResult<ProviderCultureResult>(null);
+    //        }
 
-            var culture = parts[cultureSegmentIndex];
-            return Task.FromResult(new ProviderCultureResult(culture));
-        }
-    }
+    //        var cultureSegmentIndex = parts.Contains("api") ? 1 : 0;
+    //        var hasCulture = Regex.IsMatch(parts[cultureSegmentIndex], @"^[a-z]{2}(?:-[A-Z]{2})?$");
+    //        if (!hasCulture)
+    //        {
+    //            return Task.FromResult<ProviderCultureResult>(null);
+    //        }
+
+    //        var culture = parts[cultureSegmentIndex];
+    //        return Task.FromResult(new ProviderCultureResult(culture));
+    //    }
+    //}
 }
